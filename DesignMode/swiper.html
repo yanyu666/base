@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>简易轮播</title>
+    </head>
+<style>
+    #banner{
+        width: 560px;
+        height: 290px; 
+        border: 1px solid #000; 
+        overflow: hidden; 
+        margin: 0 auto; 
+        position: relative;
+    }
+    img{
+        widows: 560px; 
+        height: 290px; 
+        display: none;
+    } 
+    ol{
+        position: absolute; 
+        float:right; 
+        bottom: 10px;}
+    li{
+        list-style: none; 
+        float: left;
+        padding: 0 10px; 
+        margin-right:20px ; 
+        cursor: pointer;
+        background: #999;}
+    ol .active{
+        background: red;
+        color:white;
+        } 
+</style>
+<script src="https://lib.baomitu.com/jquery/3.4.1/jquery.js"></script>
+<body>
+    <div id="banner">
+        <img src="http://p4.qhimg.com/bdm/960_593_0/t01e71082414f50bd52.jpg">
+        <img src="http://p0.qhimg.com/bdm/480_296_0/t01f3894323e88ea123.jpg">
+        <img src="http://p15.qhimg.com/bdm/960_593_0/t01acc12e86173a0606.jpg">
+        <img src="http://p6.qhimg.com/bdm/960_593_0/t0127bd4f8758c42304.jpg">
+        <img src="http://p6.qhimg.com/bdm/480_296_0/t01e501e8d6a74a1a1d.jpg">
+        <ol class="active">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
+    </div>
+</body>
+<script>
+    //标记是否是第一次进入页面
+    var fistTime=true;
+    //图片下标
+    var index;
+    //图片下标中间变量
+    var index1;
+    //声明定时器
+    var timeId;
+    //li的总个数
+    var liSize;
+    $(document).ready(function(){
+        var temp = document.getElementById('banner');
+        var lis = temp.getElementsByTagName('li');
+        liSize = lis.length;
+        if(fistTime){
+            fistTime = false;
+            Carousel(0);
+            //延时1秒加载自动播放
+            setTimeout(autoplayCarousel(),1000); 
+        } else {
+            //自动轮播
+            autoplayCarousel();
+        }
+    });
+    //手动轮播:鼠标悬停
+    $("li").mouseover(function(){
+        Carousel($(this).index());
+        //鼠标悬停移除定时器事件
+        clearInterval(timeId);
+    });
+    //鼠标移开重新加载自动轮播
+    $('li').mouseout(function(){
+        autoplayCarousel();
+    });
+    //轮播事件
+    function Carousel(index){
+        index1 = index;
+        $("img").eq(index).show().siblings("img").hide();
+        $("li").eq(index).addClass("active").siblings("li").removeClass("active");
+    }
+    //自动轮播定时器
+    function autoplayCarousel(){
+        timeId = setInterval(function(){
+            index = index1+1;
+            if(liSize==index){
+                index=0;
+            }
+            console.log(index);
+            Carousel(index);
+        }, 1000)
+    }
+</script>
+</html>

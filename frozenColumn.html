@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>固定第一列</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            padding: 100px;
+            box-sizing: border-box;
+        }
+        table{
+            border-collapse: collapse;
+        }
+        td,th{
+            color: #333;
+            font-size: 14px;
+            border-right: 1px solid #333;
+            line-height: 30px;
+            box-sizing: border-box;
+            white-space: nowrap;
+            background: #fff;
+        }
+        .layer-box{
+            width: 700px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #000;
+        }
+        .layer{
+            width: 700px;
+            overflow: hidden;
+            overflow-x: scroll;
+        }
+        .td-1{
+            position: absolute;
+            left: 0;
+            z-index: 2;
+            width: 150px;
+        }
+        .zhanwei{
+            width: 149px;
+        }
+        table tr:nth-child(odd) td,
+        table tr:nth-child(odd) th{
+            background: #f7f8f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="layer-box">
+        <div class="layer">
+            <table>
+                <tr>
+                    <th class="td-1">我是第一个</th>
+                    <th><div class="zhanwei"></div></th>
+                    <th>我是第二个</th>
+                    <th>我是第三个</th>
+                    <th>我是第四个</th>
+                    <th>我是第五个</th>
+                    <th>我是第六个</th>
+                    <th>我是第七个</th>
+                    <th>我是第八个</th>
+                    <th>我是第九个</th>
+                    <th>我是第十个</th>
+                </tr>
+                <tr>
+                    <td class="td-1">我是第一个</td>
+                    <td><div class="zhanwei"></div></td>
+                    <td>我是第二个</td>
+                    <td>我是第三个</td>
+                    <td>我是第四个</td>
+                    <td>我是第五个</td>
+                    <td>我是第六个</td>
+                    <td>我是第七个</td>
+                    <td>我是第八个</td>
+                    <td>我是第九个</td>
+                    <td>我是第十个</td>
+                </tr>
+                <tr>
+                    <td class="td-1">我是第一个</td>
+                    <td><div class="zhanwei"></div></td>
+                    <td>我是第二个</td>
+                    <td>我是第三个</td>
+                    <td>我是第四个</td>
+                    <td>我是第五个</td>
+                    <td>我是第六个</td>
+                    <td>我是第七个</td>
+                    <td>我是第八个</td>
+                    <td>我是第九个</td>
+                    <td>我是第十个</td>
+                </tr>
+                <tr>
+                    <td class="td-1">我是第一个</td>
+                    <td><div class="zhanwei"></div></td>
+                    <td>我是第二个</td>
+                    <td>我是第三个</td>
+                    <td>我是第四个</td>
+                    <td>我是第五个</td>
+                    <td>我是第六个</td>
+                    <td>我是第七个</td>
+                    <td>我是第八个</td>
+                    <td>我是第九个</td>
+                    <td>我是第十个</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

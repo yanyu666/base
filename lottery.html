@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="report-all-sdk-v3.0.0.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    .container{
+        display: flex;
+        flex-direction: row;
+        width: 300px;
+        height: 300px;
+        flex-wrap: wrap;
+        border:1px solid #cccccc;
+        margin: 40px auto;
+    }
+    .award{
+        /* flex: 1; */
+        width: 98px;
+        border:1px solid #cccccc;
+        display: flex;
+        align-items: center;
+        background:#09f;
+        justify-content: center;
+    }
+    .start-btn{
+        cursor: pointer;
+    }
+    .start-btn:hover{
+        background:rgba(0,153,255,.8);
+    }
+    .on-selected{
+        background:rgba(0,153,255,.8);
+    }
+    #contaner {
+     width:606px;
+     height:606px;
+     border:1px solid #cccccc;
+     margin:40px auto;
+    }
+    #contaner div {
+     width:200px;
+     height:200px;
+     background:#09f;
+     text-align:center;
+     color:#fff;
+     font-size:16px;
+     font-weight:bold;
+     line-height:200px;
+     float:left;
+     border:1px solid #cccccc;
+    }
+    #contaner #five {
+     transition:all 0.5s ease-in-out 0s;
+    }
+    #contaner #five:hover {
+     cursor:pointer;
+     font-size:25px;
+     transform:scale(1.2) rotate(360deg);
+     background:#fff;
+     color:#09f;
+    }
+    .ys {
+     transform:scale(1.2);
+     box-shadow:0 0 0 200px red inset;
+    }
+    </style>
+<body>
+    <div class="container">
+        <div class="award" id="one">1</div>
+        <div class="award" id="two">2</div>
+        <div class="award" id="three">3</div>
+        <div class="award" id="eight">8</div>
+        <div class="award start-btn">start</div>
+        <div class="award" id="four">4</div>
+        <div class="award" id="seven">7</div>
+        <div class="award" id="six">6</div>
+        <div class="award" id="five">5</div>
+    </div>
+    <!-- <div id="contaner">
+        <div id="one">一块钱</div>
+        <div id="two">谢谢惠顾</div>
+        <div id="three">下去写作业</div>
+        <div id="four">一局游戏</div>
+        <div id="five">点击抽奖</div>
+        <div id="six">两块钱</div>
+        <div id="seven">下去写作业</div>
+        <div id="eight">谢谢惠顾</div>
+        <div id="nigth">两局游戏</div>
+       </div> -->
+</body>
+
+<script>
+    window.onload = function(){
+        let sudokuArr = [
+            {id: 'one', checked: true},
+            {id: 'two', checked: false},
+            {id: 'three', checked: false},
+            {id: 'four', checked: false},
+            {id: 'five', checked: false},
+            {id: 'six', checked: false},
+            {id: 'seven', checked: false},
+            {id: 'eight', checked: false},
+        ];
+        let startBtn = document.querySelector('.start-btn');
+        let runningFlag = false,hasRunningFlag = false;
+        startBtn.onclick = function (e){
+            if(runningFlag)return;
+            console.log(e)
+            let index = 0;
+            sudokuArr.forEach((item,i) =>{
+                let className = document.getElementById(item.id).className;
+                if(className.includes('on-selected')){
+                    index = i;
+                    document.getElementById(item.id).classList.remove('on-selected')
+                    hasRunningFlag = true;
+                }
+            })
+            // if(!hasRunningFlag){
+                index = Math.floor(Math.random() * 8);
+            // }
+            document.getElementById(sudokuArr[index].id).classList.add('on-selected');
+            runningFlag = true;
+            const startTime = Date.now();
+            const increaseHoldTime = 2000;
+            const reduceHoldTime = 2000;
+            const averageHoldTime = 2000;
+            const maxSpeed = 20;
+            let speed = 300;
+            let maxTime = 5000,holdTime = 0;
+            // let timer = setInterval(() => {
+            //     let currId = sudokuArr[index].id;
+            //     // debugger
+            //     let prevId = index == 0 ? sudokuArr[7].id : sudokuArr[index - 1].id
+            //     let currEl = document.getElementById(currId);
+            //     let prevEl = document.getElementById(prevId);
+            //     prevEl.classList.remove('on-selected');
+            //     currEl.classList.add('on-selected');
+            //     index++;
+            //     holdTime += 200;
+            //     speed -= 20;
+            //     if(speed < 20)speed = 20;
+            //     // if(holdTime >=  maxTime)clearInterval(timer);
+            //     if(index > 7)index = 0;
+            // }, speed);
+            rotate();
+            function rotate(){
+                let timer = setTimeout(() => {
+                    let currId = sudokuArr[index].id;
+                    // debugger
+                    let prevId = index == 0 ? sudokuArr[7].id : sudokuArr[index - 1].id
+                    let currEl = document.getElementById(currId);
+                    let prevEl = document.getElementById(prevId);
+                    prevEl.classList.remove('on-selected');
+                    currEl.classList.add('on-selected');
+                    // if(speed < 50){
+                    //     speed = 50;
+                    //     holdTime += speed;
+                    // }else{
+                    //     speed -= 20;
+                    // }
+                    if(holdTime < 1000){
+                        if(speed > 50){
+                            speed -= 20;
+                        }else{
+                            speed = 50;
+                        }
+                        rotate();
+                    }else if(holdTime < 1500 && holdTime >= 1000){
+                        rotate();
+                    }else{
+                        speed += 20;
+                        if(speed < 400){
+                            rotate();
+                        }else{
+                            console.log(index)
+                            runningFlag = false;
+                        }
+                    }
+                    clearTimeout(timer);
+                    holdTime += 20;
+                    index++;
+                    if(index > 7)index = 0;
+                }, speed);
+            }
+        }
+    }
+</script>
+</html>

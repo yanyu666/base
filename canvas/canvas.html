@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./base.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas">56</canvas>
+    <canvas id="circle"></canvas>
+</body>
+<script>
+    let ctx = core.genTrigon('canvas');
+    let cirCtx = core.genFace('circle');
+    console.log()
+    let imgUrl = document.getElementById('circle').toDataURL('image/png');
+    let img = new Image();
+    img.src = imgUrl;
+    img.crossOrigin = 'anonymous'
+    console.log(img)
+    document.body.appendChild(img);
+//     let imgCtx = new Image(60, 45);
+//     imgCtx.onload = drawImageActualSize;
+//     function drawImageActualSize(){
+//         cirCtx.drawImage(imgCtx, 60, 0)
+//   // toImage
+//         var dataImg = new Image()
+//         dataImg.src = cirCtx.toDataURL('image/png')
+//         document.body.appendChild(dataImg) // 长按图片保存
+//     }
+//     imgCtx.crossOrigin = 'anonymous';
+//     imgCtx.src = '../images/bg.png'
+</script>
+</html>

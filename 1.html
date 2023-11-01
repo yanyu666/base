@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Album</title>
+  <!-- Author: Hutia -->
+  <style>
+
+html {
+ margin:0px;
+ padding:0px;
+ height:100%;
+ overflow:auto;
+}
+
+body {
+ margin:0px;
+ padding:0px;
+ height:100%;
+}
+
+.loadingMask {
+ position:absolute;
+ left:0px;
+ top:0px;
+ width:100%;
+ height:100%;
+ background-color:#909AE0;
+ filter:alpha(opacity=60);
+ opacity:0.6;
+ z-index:200;
+}
+
+.loadingBar {
+ width:400px;
+ height:6px;
+ border:1px solid black;
+ position:relative;
+ left:50%;
+ top:50%;
+ margin:-3px 0px 0px -200px;
+ overflow:hidden;
+}
+
+.loadingProcess {
+ width:10px;
+ height:4px;
+ background-color:green;
+ position:absolute;
+ left:1px;
+ top:1px;
+ overflow:hidden;
+}
+
+.loadingLabel {
+ width:400px;
+ height:40px;
+ line-height:28px;
+ font-size:12px;
+ font-family:arial 宋体;
+ letter-spacing:2px;
+ text-align:center;
+ position:absolute;
+ left:50%;
+ top:50%;
+ margin:0px 0px 0px -200px;
+ overflow:hidden;
+ z-index:205;
+}
+
+.loadingButton {
+ width:100px;
+ height:16px;
+ border-width:0px;
+ background-color:transparent;
+ color:blue;
+ line-height:16px;
+ font-size:11px;
+ font-family:"Time New Roman" 宋体;
+ letter-spacing:1px;
+ text-align:center;
+ text-decoration:underline;
+ position:absolute;
+ left:50%;
+ top:18px;
+ margin-left:-50px;
+ overflow:hidden;
+ cursor:pointer;
+}
+
+.imgDIV {
+ border:1px solid #666;
+ margin:4px;
+ width:102px;
+ height:82px;
+ float:left;
+ position:relative;
+}
+
+.albumImage {
+ position:absolute;
+ border-style:none;
+ filter:alpha(opacity=50);
+ opacity:0.5;
+ cursor:pointer;
+}
+
+  </style>
+  
+  <script>
+/*
+ Author: Hutia
+*/
+
+// 定义常量
+var intMaxWidth=100 /*最大宽度*/, intMaxHeight=80 /*最大高度*/, blnForceSize=true /*是否限制大小*/, blnAutoFit=true /*是否自动放大*/;
+
+// 全局变量
+var objLoadingMask, objLoadingBar, objLoadingProcess, objLoadingLabel, objLoadingButton;
+var aryImgs=new Array();
+var loadedImageCount=0;
+var blnHideProcess=false;
+var objBigImg;
+
+function loadImg(src,containerID){ //这个函数必须在 container 载入之后使用
+ var container, imgDIV;
+ var objTemp=new Image();
+ 
+ objTemp.className="albumImage";
+ objTemp.style.display="none";
+ 
+ container=document.getElementById(containerID);
+ if(!container)container=document.body;
+ imgDIV=document.createElement("DIV");
+ imgDIV.className="imgDIV";
+ imgDIV.style.display="none";
+ container.appendChild(imgDIV);
+ imgDIV.appendChild(objTemp);
+ 
+ objTemp.οnclick=img_onclick;
+ objTemp.οnlοad=img_onload;
+ objTemp.οnerrοr=img_onerror;
+ objTemp.οnmοuseοver=img_onmouseover;
+ objTemp.οnmοuseοut=img_onmouseout;
+ objTemp.index=aryImgs.length;
+ objTemp.containerID=containerID;
+ aryImgs[objTemp.index]=objTemp;
+ objTemp.src=src;
+}
+
+function img_onclick(){
+ objBigImg=new Image();
+ document.body.appendChild(objBigImg);
+ objBigImg.src=this.src;
+ objBigImg.originalWidth=this.originalWidth;
+ objBigImg.originalHeight=this.originalHeight;
+ objBigImg.style.position="absolute";
+ objBigImg.style.top=html_getRealTop(this)+"px";
+ objBigImg.style.left=html_getRealLeft(this)+"px";
+ objBigImg.style.width=this.offsetWidth+"px";
+ objBigImg.style.height=this.offsetHeight+"px";
+ objBigImg.style.zIndex=400;
+ objBigImg.tabIndex=0;
+ objBigImg.οnblur=function(){
+  clearTimeout(this.timeHandle);
+  destory(this);
+ }
+ objBigImg.focus();
+ 
+}
+
+html_getRealLeft=function(o){ var l=o.offsetLeft; while(o=o.offsetParent){ l+=o.offsetLeft; } return(l); }
+
+html_getRealTop=function(o){ var t=o.offsetTop; while(o=o.offsetParent){ t+=o.offsetTop; } return(t); }
+
+function img_onerror(){
+ aryImgs.splice(this.index,1);
+ for(var i=this.index;i<aryImgs.length;i++)aryImgs[i].index--;
+ destory(this.parentNode);
+ setProcess();
+}
+/*
+ Author: Hutia
+*/
+function img_onload(){
+ var w, h, k1, k2, loadingPercent;
+ 
+ loadedImageCount++;
+ this.style.display="";
+ w=this.originalWidth=this.width;
+ h=this.originalHeight=this.height;
+ k1=intMaxWidth/intMaxHeight;
+ k2=w/h;
+ if((w>intMaxWidth||h>intMaxHeight)&&blnForceSize || (w<intMaxWidth&&h<intMaxHeight&&blnAutoFit)){
+  if(k2>k1){w=intMaxWidth;h=w/k2;}else{h=intMaxHeight;w=h*k2;}
+  this.style.width=w+"px";
+  this.style.height=h+"px";
+  this.style.left=parseInt((intMaxWidth-w)/2+1)+"px";
+  this.style.top=parseInt((intMaxHeight-h)/2+1)+"px";
+ }
+ 
+ setProcess();
+}
+
+function img_onmouseout(){
+ try{this.filters[0].enabled=true;}catch(e){}
+ try{this.style.opacity=0.5;}catch(e){}
+}
+
+function img_onmouseover(){
+ try{this.filters[0].enabled=false;}catch(e){}
+ try{this.style.opacity=1;}catch(e){}
+}
+
+function destory(obj){
+ obj.parentNode.removeChild(obj);
+}
+
+function setProcess(){
+ var loadingPercent;
+ if(blnHideProcess)return;
+ loadingPercent=loadedImageCount/aryImgs.length*100;
+ objLoadingLabel.firstChild.nodeValue="Please wait. Images Loading..."+loadingPercent.toFixed(1)+"% ("+loadedImageCount+"//"+aryImgs.length+")";
+ objLoadingProcess.style.width=parseInt(loadingPercent*(objLoadingBar.offsetWidth-4)/100)+"px";
+ if(loadingPercent==100)hideLoading();
+}
+
+function showLoading(){ //这个函数必须在有 body 之后使用
+ objLoadingMask=document.createElement("div");
+ objLoadingMask.className="loadingMask";
+ document.body.appendChild(objLoadingMask);
+ 
+ objLoadingBar=document.createElement("div");
+ objLoadingBar.className="loadingBar";
+ objLoadingMask.appendChild(objLoadingBar);
+ 
+ objLoadingProcess=document.createElement("div");
+ objLoadingProcess.className="loadingProcess";
+ objLoadingBar.appendChild(objLoadingProcess);
+ 
+ objLoadingLabel=document.createElement("div");
+ objLoadingLabel.className="loadingLabel";
+ objLoadingLabel.innerHTML="Please wait. Images Loading...";
+ document.body.appendChild(objLoadingLabel);
+ 
+ objLoadingButton=document.createElement("input");
+ objLoadingButton.className="loadingButton";
+ objLoadingButton.type="button";
+ objLoadingButton.value="Hide Process";
+ objLoadingButton.οnclick=hideLoading;
+ objLoadingLabel.appendChild(objLoadingButton);
+ 
+}
+/*
+ Author: Hutia
+*/
+function hideLoading(){
+ blnHideProcess=true;
+ objLoadingLabel.firstChild.nodeValue="Process Ending...";
+ setTimeout(finishLoading,500);
+}
+
+function hideLoading_showAllImg(){
+ for(var i=0;i<aryImgs.length;i++){aryImgs[i].parentNode.style.display="";}
+}
+
+function finishLoading(){
+ destory(objLoadingMask);
+ destory(objLoadingLabel);
+ hideLoading_showAllImg();
+}
+
+ 
+
+  </script>
+ </head>
+ 
+ <body>
+  <h1>This is the Demo.</h1>
+  <div id="container1"></div>
+  <script>showLoading();</script>
+  <script>
+baseURL="http:hutia.monternet-idc.com//album//";
+loadImg(baseURL+"001.jpg","container1");
+loadImg(baseURL+"002.jpg","container1");
+loadImg(baseURL+"003.jpg","container1");
+loadImg(baseURL+"004.jpg","container1");
+loadImg(baseURL+"005.jpg","container1");
+loadImg(baseURL+"006.jpg","container1");
+loadImg(baseURL+"006error.jpg","container1");
+loadImg(baseURL+"007.jpg","container1");
+loadImg(baseURL+"008.jpg","container1");
+loadImg(baseURL+"009.jpg","container1");
+loadImg(baseURL+"010.jpg","container1");
+loadImg(baseURL+"011.jpg","container1");
+loadImg(baseURL+"012.jpg","container1");
+loadImg(baseURL+"013.jpg","container1");
+loadImg(baseURL+"096error.jpg","container1");
+loadImg(baseURL+"014.jpg","container1");
+loadImg(baseURL+"015.jpg","container1");
+loadImg(baseURL+"016.jpg","container1");
+loadImg(baseURL+"017.jpg","container1");
+loadImg(baseURL+"018.jpg","container1");
+loadImg(baseURL+"a06error.jpg","container1");
+  </script>
+ </body>
+ 
+</html> 

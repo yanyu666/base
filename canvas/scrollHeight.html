@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<style>
+  .outer{
+    width: 100px;height: 100px;
+    background: yellow;
+    padding:10px;
+    margin:15px;
+    border:5px solid black;
+    overflow: auto;
+    /* box-sizing: border-box; */
+  }
+  .inner{
+    height: 20px;
+    border-bottom: 1px solid silver;
+  }
+</style>
+<body>
+  <div class="outer" id="outer">
+    <div class="inner"></div>
+    <div class="inner"></div>
+    <div class="inner"></div>
+    <div class="inner"></div>
+    <div class="inner"></div>
+    <div class="inner"></div>
+    <div class="inner"></div>
+    <div class="inner"></div>
+    <div class="inner"></div>
+    <div class="inner"></div>
+  </div>
+</body>
+<script>
+  let outer = document.querySelector('#outer');
+  console.log('clientWidth:', outer.clientWidth, 'width: 100px + padding: 10px * 2  - 滚动条宽度');
+  console.log('offsetWidth:', outer.offsetWidth, 'width: 100px + padding: 10px * 2 + border: 5px * 2');
+  console.log('scrollWidth:', outer.scrollWidth, '横向没有溢出时等于clientWidth');
+  
+  console.log('clientHeight:', outer.clientHeight, 'height: 100px + padding: 10px * 2'); // 如果有横向滚动条就要减去滚动条宽度了，比如overflow设置为scroll
+  console.log('offsetHeight:', outer.offsetHeight, 'height: 100px + padding: 10px * 2 + border: 5px * 2');
+  console.log('scrollHeight:', outer.scrollHeight, 'height: 20px * 10 + padding: 10px * 2 + border-bottom: 1px * 10');
+ 
+  // border-box
+//   console.log('clientWidth:', outer.clientWidth, 'width: 100px - border:5px * 2 - 滚动条宽度');
+//   console.log('offsetWidth:', outer.offsetWidth, 'width: 100px');
+//   console.log('scrollWidth:', outer.scrollWidth, '横向没有溢出时等于clientWidth');
+  
+//   console.log('clientHeight:', outer.clientHeight, 'height: 100px - border: 5px * 2'); // 如果有横向滚动条就要减去滚动条宽度了，比如overflow设置为scroll
+//   console.log('offsetHeight:', outer.offsetHeight, 'height: 100px');
+//   console.log('scrollHeight:', outer.scrollHeight, '(height: 20px + border-bottom: 1px) * 10 + padding: 10px * 2');
+</script>
+</html>

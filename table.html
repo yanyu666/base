@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8" />
+<title>css冻结列的效果</title>
+<!-- 1.div里面放table或者其它容器，当子容器的宽度大于父容器时，父容器就会出现滚动条。
+2.头部固定不动的列让它脱离文档流(position:fixed|absolute)，然后给table一个margin-left值避免给固定列挡住
+3.尾部固定不动的列让它脱离文档流(position:absolute)，然后给尾巴添加一个占位td,因为尾部固定列会挡住最后一列
+4.注意：固定列加了position:absolute不能相对于自己父亲元素(table和div),否则固定不了。 -->
+<style type="text/css">
+
+.container{
+width:200px;
+overflow: scroll;
+}
+
+
+table{
+border-collapse: collapse;
+border: 1px solid #000;
+width:100%;
+margin-left:25px;
+margin-right:25px;
+}
+
+table td{
+border: 1px solid #666666;
+width:30px;
+}
+
+.head{
+background-color:red;
+position: fixed;
+left:0;
+}
+
+.foot{
+background-color:red;
+position: absolute;
+left:150px;
+}
+
+.title{
+width:50px;
+}
+
+</style>
+
+</head>
+<body >
+
+<div class="container">
+<table>
+<tr><td class="head"><div>固定标题</div></td>
+<td>标题2</td>
+<td>标题3</td>
+<td>标题4</td>
+<td>标题5</td>
+
+<td>标题1</td>
+<td>标题1</td>
+<td>标题1</td>
+<td>标题1</td>
+<td>标题1</td>
+
+<td>标题1</td>
+<td>标题1</td>
+<td>标题1</td>
+<td>标题(last)</td>
+<td>占位</td>
+<td class="foot">固定标题</td>
+</tr>
+
+<tr>
+<td class="head">内容</td>
+<td>内容</td>
+<td>内容</td>
+<td>内容</td>
+<td>内容</td>
+
+<td>内容</td>
+<td>内容</td>
+<td>内容</td>
+<td>内容</td>
+<td>内容</td>
+
+<td>内容</td>
+<td>内容</td>
+<td>内容</td>
+<td>内容</td>
+<td>占位</td>
+<td class="foot">内容</td>
+</tr>
+
+</table>
+</div>
+
+</body>
+</html>

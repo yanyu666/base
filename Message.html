@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Document</title>
+</head>
+<style>
+  .popupStyle {
+  display: none;
+  width: 160px;
+  background-color: rgb(85, 85, 85);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: fixed;
+  z-index: 1;
+  top: 2%;
+  left: 50%;
+  margin-left: -80px;
+ }
+  
+  .popupStyle::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+ }
+</style>
+<body style="text-align:center">
+  
+ <h2 style="margin-top: 100px;">弹窗</h2>
+   
+ <div style="text-align: center;">
+  <a href="#" onclick="handleMsg(msg)">点我有弹窗!</a>
+  <a href="#" onclick="handleDomMsg(domMsg)">点我有弹窗!</a>
+ </div>
+ 
+ <span class="popupStyle" id="popupMsg">提示信息!</span>
+  
+ 
+ <script>
+  const msg = "我是样式弹窗";
+  const domMsg = "我是DOM弹窗";
+ 
+  // 样式弹窗
+  function handleMsg(message) {
+   const popup = document.getElementById("popupMsg");
+   popup.innerHTML = message || "Hello, World";
+   popup.style.display="block";
+   setTimeout(() => {
+    popup.style.display="none"
+   }, 1000);
+  }
+ 
+  // DOM 弹窗
+  function handleDomMsg(message) {
+   const div = document.createElement("div");
+   document.body.appendChild(div);
+   div.innerHTML = message || "this is a Message";
+   div.className = "popupStyle";
+   div.style.display = "block";
+ 
+   setTimeout(() => {
+    div.remove();
+   }, 1000);
+  }
+ </script>
+</body>
+</html>

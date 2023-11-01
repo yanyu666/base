@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rocket Animation Effects</title>
+    <link rel="stylesheet" href="Rocket.css">
+</head>
+<body>
+    <div class="scene">
+        <div class="rocket">
+            <img src="images/rocket.png" alt="">
+            <div class="fireContainer">
+                <div class="flame red"></div>
+                <div class="flame orange"></div>
+                <div class="flame yellow"></div>
+                <div class="flame white"></div>
+                <div class="circle blue"></div>
+                <div class="circle black"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function starts () {
+            let count = 50;
+            let scene = document.querySelector('.scene');
+            let i = 0;
+            while(i < count){
+                let star = document.createElement('i');
+                let x = Math.floor(Math.random() * window.innerWidth);
+
+                let duration = Math.random() * 1;
+                let h = Math.random() * 100;
+                console.log(h)
+                star.style.left = x + 'px';
+                star.style.width = 2 + 'px';
+                star.style.height = 50 + h + 'px';
+                star.style.animationDuration = duration + 's';
+
+                scene.appendChild(star);
+                i++;
+            }
+        }
+        starts()
+    </script>
+</body>
+</html>

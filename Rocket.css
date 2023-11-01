@@ -1,0 +1,146 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.scene{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #01070a;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+}
+
+.scene i{
+    z-index: 1;
+    position: absolute;
+    top: -250px;
+    background: rgba(255, 255, 255, 0.5);
+    animation: animateStars linear infinite;
+}
+@keyframes animateStars {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(200vh);
+    }
+}
+
+.scene .rocket{
+    position: relative;
+    animation: animate 0.1s ease infinite;
+}
+
+@keyframes animate {
+    0%,100% {
+        transform: translateY(-4px);
+    }
+    50% {
+        transform: translateY(2px);
+    }
+}
+
+// .scene .rocket::before{
+//     content: '';
+//     position: absolute;
+//     bottom: -80px;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     width: 10px;
+//     height: 100px;
+//     background: linear-gradient(orange, transparent);
+// }
+
+// .scene .rocket::after{
+//     content: '';
+//     position: absolute;
+//     bottom: -80px;
+//     left: 50%;
+//     transform: translateX(-50%);
+//     width: 10px;
+//     height: 100px;
+//     background: linear-gradient(orange, transparent);
+//     filter: blur(20px);
+// }
+
+.fireContainer{
+    position: absolute;
+    left: 35%;
+    // transform: translateX(-50%);
+    bottom: 8px;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    // animation-name: fireInTheHole;
+	// animation-duration: 3ms;
+	// animation-delay: 200ms;
+	// animation-timing-function: ease-in;
+	// animation-iteration-count: infinite;
+	// animation-direction: alternate;
+}
+@keyframes fireInTheHole {
+    0%{
+        transform: rotate(1deg);
+    }
+    20%{
+        transform: rotate(-1deg) scaleY(1.04);
+    }
+    40%{
+        transform: rotate(1deg) scaleY(0.92);
+    }
+    60%{
+        transform: rotate(-2deg);
+    }
+    80%{
+        transform: rotate(2deg);
+    }
+    100%{
+        transform: rotate(-1deg);
+    }
+}
+
+.flame{
+    position: absolute;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    transform: rotate(-45deg);
+}
+.red {
+    width: 50px;
+    height: 50px;
+    left: 10%;
+    background: OrangeRed;
+    z-index: 1;
+    box-shadow: 0 0 8px 8px OrangeRed;
+}
+.orange {
+    width: 40px;
+    height: 40px;
+    left: 18%;
+    z-index: 2;
+    background: orange;
+    box-shadow: 0 0 5px 8px orange;
+}
+.yellow {
+    width: 30px;
+    height: 30px;
+    left: 27%;
+    z-index: 2;
+    background: yellow;
+    box-shadow: 0 0 5px 5px yellow;
+}
+.white {
+    width: 20px;
+    height: 20px;
+    left: 35%;
+    z-index: 2;
+    background: white;
+    box-shadow: 0 0 5px 5px white;
+}

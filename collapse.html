@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .box {
+        height: 300px;
+        max-height: 0px;
+        transition: max-height 600ms;
+        overflow: hidden;
+        background: #4b504c;
+    }
+</style>
+<body>
+    <button>...</button>
+    <div id="box" class="box">66666666</div>
+</body>
+</html>
+
+
+    <script>
+    function openAndClose(){
+            var el = document.getElementById("box");
+            if(window.getComputedStyle(el).maxHeight == "0px"){
+                el.style.maxHeight = "1040px";
+            }else{
+                el.style.maxHeight="0px";
+            }
+    }
+    //这样过程中就会有个不尽人意的地方，关闭的时候总会有点延迟
+    //原因可能是maxHeight到height这个值得过渡过程耗费了时间
+    </script>

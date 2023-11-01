@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="stockGraph" width="150" height="150" style="background-color: red;">
+        current stock price: $3.15 +0.15
+      </canvas>
+      
+      <canvas id="clock" width="150" height="150">
+        <img src="images/sunflower.jpeg" id="img" width="150" height="150" alt=""/>
+      </canvas>
+      <canvas id="test-stock" width="300" height="200"></canvas>
+      
+</body>
+<script>
+    let test = document.getElementById('test-stock');
+    let cvs = document.getElementById('clock');
+    let imhg = document.getElementById('img');
+    let testCtx = test.getContext('2d');
+    testCtx.fillStyle = "rgb(200,0,0)";
+    testCtx.fillRect (0, 0, 55, 50);
+    testCtx.fillStyle = "rgba(0, 0, 200, 0.5)";
+    testCtx.fillRect (245, 150, 55, 50);
+
+    if(cvs){
+        let ctx = cvs.getContext('2d');
+        img.onload = function () {
+            ctx.drawImage(this, 0, 0);
+        }
+    }
+</script>
+</html>

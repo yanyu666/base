@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动态执行js</title>
+</head>
+
+<body>
+  <h2>动态执行js</h2>
+  <button onclick="exec('alert(a)')">eval</button>
+  <button onclick="newFn('alert(a)')">function</button>
+  <button onclick="setTime('alert(a)')">setTimeout</button>
+  <button onclick="scriptFn('alert(a)')">scriptFn</button>
+  <script>
+    var a = 1;
+    function exec(code) {
+      debugger;
+      var a = 2;
+      eval(code)
+      let temp = this.eval;
+      temp(code)
+    }
+    function newFn(code) {
+      var a = 3;
+      let b = new Function(code);
+      b();
+    }
+    function setTime(code) {
+      var a = 4;
+      setTimeout(code);
+    }
+    function scriptFn(code) {
+      var a = 5;
+      let s = document.createElement('script')
+      s.innerHTML = code;
+      document.body.appendChild(s)
+    }
+  </script>
+</body>
+
+</html>

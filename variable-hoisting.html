@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>变量提升和函数提升</title>
+</head>
+
+<body>
+  <h2>变量提升和函数提升</h2>
+  <button onclick="test('alert(a)')">click</button>
+  <script>
+    function test() {
+      debugger;
+      function a() { }
+      var a = 1;
+      console.log(typeof a)
+    }
+  </script>
+</body>
+
+</html>
+<!--
+  undefined
+  undefined
+  200
+  100
+ -->

@@ -1,6 +1,6 @@
 const arr = [3, 5, 7, 1, 4, 56, 12, 78, 25, 0, 9, 8, 42, 37];
 
-const mergeSort = (arr, temp, left, right) => {
+export const mergeSort = (arr, temp, left, right) => {
   console.log(1,arr)
    if(arr.length<2){
         return arr;

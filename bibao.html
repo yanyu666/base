@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<button onclick="openClick()">开始</button>  
+    <button onclick="handleClick()">改变a的值</button>    
+</body>
+<script>
+function parent(arg){
+    let a=arg;
+    console.log(arg)
+    return function children(){
+        alert('a的值是：'+ a);
+    }
+}
+
+function openClick(){
+	setTimeout(()=>{
+	    parent(111)();
+	},1000);
+    setTimeout(()=>{
+	    parent(333)();
+	},2000);
+}
+
+function handleClick(){
+    parent(222);
+}
+</script>
+
+</html>
